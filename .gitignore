@@ -1,0 +1,21 @@
+# Build directories and binary files
+cmake-build-*/
+
+# User spesific settings
+CMakeUserPresets.json
+
+# IDE files
+.idea/
+
+# OS Generated Files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.Trash-*
+$RECYCLE.BIN/
+.TemporaryItems
+ehthumbs.db
+Thumbs.db
