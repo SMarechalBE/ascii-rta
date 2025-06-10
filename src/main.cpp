@@ -1,5 +1,5 @@
 #include <cstdio>
-#include "audio_consumer.h"
+#include "analyzer.h"
 #include "gui.h"
 #include "ncurses.h"
 
