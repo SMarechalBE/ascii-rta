@@ -12,4 +12,4 @@ FetchContent_MakeAvailable(dsp-filters)
 add_library(audio_consumer audio_consumer.cpp)
 target_include_directories(audio_consumer
                            PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(audio_consumer PRIVATE DSPFilters)
+target_link_libraries(audio_consumer PUBLIC DSPFilters PRIVATE fmt)

@@ -1,10 +1,12 @@
 #include <cstdio>
+#include "audio_consumer.h"
 #include "gui.h"
 #include "ncurses.h"
 
 int main()
 {
     Gui gui{};
+    audio_consumer::Analyzer analyzer{};
 
     auto running{true};
     while (running)
@@ -30,8 +32,7 @@ int main()
         }
         fflush(stdout);
 
-        // const auto data = audio.getOctaveBands()
-        const auto data = std::array<float, 10>{0, -10, -20, -30, -40, -50, -60, -70, -80, -90}; // Mocked data
+        const auto data = analyzer.getOctaveBands();
         gui.draw(data);
     }
 
