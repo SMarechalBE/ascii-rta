@@ -23,10 +23,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(span-lite)
 
 # RtAudio Wrapper lib
-add_library(audio_handler audio_handler.cpp stream_handler.cpp)
-target_include_directories(audio_handler
+add_library(audio_producer audio_handler.cpp stream_handler.cpp)
+target_include_directories(audio_producer
                            PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(
-  audio_handler
+  audio_producer
   PUBLIC rtaudio
   PRIVATE fmt)

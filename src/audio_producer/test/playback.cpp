@@ -5,6 +5,13 @@
 
 class SawCallback : public audio_producer::CallbackHandler<float>
 {
+public:
+    explicit SawCallback(const uint8_t channel_count)
+        : CallbackHandler{channel_count}, lastValues(channel_count, 0)
+    {
+    }
+
+private:
     int process(float* output,
                 const float* /*input*/,
                 uint32_t frame_count,
@@ -16,12 +23,12 @@ class SawCallback : public audio_producer::CallbackHandler<float>
             std::cout << "Stream underflow detected!" << std::endl;
         }
 
-        nonstd::span output_span(output, frame_count*2);
+        nonstd::span output_span(output, frame_count * channel_count_);
 
         // Write interleaved audio data.
         for (uint32_t i = 0; i < frame_count; i++)
         {
-            for (uint8_t j = 0; j < 2; j++)
+            for (uint8_t j = 0; j < channel_count_; j++)
             {
                 output_span[i] = lastValues.at(j);
 
@@ -36,7 +43,7 @@ class SawCallback : public audio_producer::CallbackHandler<float>
         return 0;
     }
 
-    std::array<float, 2> lastValues{0, 0};
+    std::vector<float> lastValues{};
 };
 
 int main()
@@ -44,12 +51,13 @@ int main()
     try
     {
         audio_producer::AudioHandler audio{};
-        SawCallback sawcb{};
+        constexpr auto channel_count{1};
+        SawCallback saw{channel_count};
 
         const auto stream = audio.buildStream()
-                                    .outputDevice(audio.getDefaultOutputDevice(), 2)
-                                    .bufferFrames(512)
-                                    .callback(sawcb)
+                                    .outputDevice(audio.getDefaultOutputDevice(), channel_count)
+                                    .bufferFrames(2048)
+                                    .callback(saw)
                                     .autoStart()
                                     .build();
 

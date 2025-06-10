@@ -1,7 +1,13 @@
 #include "audio_handler.h"
 
-class EchoCallback : public rta_assignment::CallbackHandler<float>
+#include "stream_handler.h"
+
+#include <cstdint>
+
+class EchoCallback : public audio_producer::CallbackHandler<float>
 {
+    using CallbackHandler::CallbackHandler;
+
     int process(float* output,
                 const float* input,
                 uint32_t frame_count,
@@ -13,7 +19,7 @@ class EchoCallback : public rta_assignment::CallbackHandler<float>
             std::cout << "Stream over/underflow detected." << std::endl;
         }
 
-        memcpy(output, input, frame_count * sizeof(float) * 2);
+        memcpy(output, input, frame_count * sampleByteSize());
 
         return 0;
     }
@@ -23,17 +29,17 @@ int main()
 {
     try
     {
-        rta_assignment::AudioHandler audio{};
-        EchoCallback echo{};
+        audio_producer::AudioHandler audio{};
+        constexpr auto channel_count{1};
+        EchoCallback echo{channel_count};
 
         const auto stream = audio.buildStream()
-                                    .outputDevice(audio.getDefaultOutputDevice(), 2)
-                                    .inputDevice(audio.getDefaultInputDevice(), 2)
-                                    .bufferFrames(2048)
+                                    .outputDevice(audio.getDefaultOutputDevice(), channel_count)
+                                    .inputDevice(audio.getDefaultInputDevice(), channel_count)
+                                    .bufferFrames(10)
                                     .callback(echo)
                                     .autoStart()
                                     .scheduleRealtime()
-                                    .minimizeLatency()
                                     .numberOfBuffers(4)
                                     .build();
 
@@ -42,6 +48,7 @@ int main()
     }
     catch (const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
+        fmt::print("\n{}\n", e.what());
+        fflush(stdout);
     }
 }

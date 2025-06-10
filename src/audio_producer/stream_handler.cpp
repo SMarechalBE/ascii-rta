@@ -22,6 +22,7 @@ const T* as_ptr(const std::optional<T>& opt) noexcept
 {
     return opt.has_value() ? std::addressof(opt.value()) : nullptr;
 }
+
 } // namespace
 
 namespace audio_producer
@@ -94,12 +95,15 @@ void StreamHandler::_doStart()
 {
     if (const auto err = audio_.startStream())
     {
-        throw StartStreamException{err};
+        throw StreamException{audio_.getErrorText()};
     }
 }
 
 void StreamHandler::_doOpen()
 {
+
+    fmt::print("Opening stream, sample rate:{}, desired buffer frames:{}", sample_rate_, buffer_frames_);
+    const auto desired_buffer_frame = buffer_frames_;
     if (const auto err = audio_.openStream(as_ptr(output_parameters_),
                                            as_ptr(input_parameters_),
                                            format_,
@@ -109,10 +113,14 @@ void StreamHandler::_doOpen()
                                            nullptr,
                                            &stream_options_))
     {
-        throw OpenStreamException{err};
+        throw StreamException{audio_.getErrorText()};
     }
 
-    // fmt::print("Open streamed, buffer size")
+    if (desired_buffer_frame != buffer_frames_)
+    {
+        throw StreamException{fmt::format("Buffer frame value changed: {} -> {}", desired_buffer_frame, buffer_frames_)};
+    }
+
 }
 
 } // namespace audio_producer

@@ -22,34 +22,17 @@ public:
         : std::runtime_error{fmt::format("Stream Exception: {}", msg)}
     {
     }
-    explicit StreamException(const RtAudioErrorType type)
-        : StreamException{toString(type)}
-    {
-    }
-};
-
-class OpenStreamException final : public StreamException
-{
-public:
-    explicit OpenStreamException(const RtAudioErrorType type)
-        : StreamException(fmt::format("open error ({})", toString(type)))
-    {
-    }
-};
-
-class StartStreamException final : public StreamException
-{
-public:
-    explicit StartStreamException(const RtAudioErrorType type)
-        : StreamException(fmt::format("start error ({})", toString(type)))
-    {
-    }
 };
 
 template<typename DataType>
 class CallbackHandler
 {
 public:
+    explicit CallbackHandler(const uint8_t channel_count)
+        : channel_count_{channel_count}
+    {
+    }
+
     int operator()(void* outputBuffer,
                    void* inputBuffer,
                    unsigned int nFrames,
@@ -72,6 +55,10 @@ protected:
                         uint32_t frame_count,
                         double stream_time,
                         RtAudioStreamStatus status) = 0;
+
+    [[nodiscard]] size_t sampleByteSize() const { return sizeof(DataType) * channel_count_; }
+
+    uint8_t channel_count_{1};
 };
 
 struct StreamBuilder;
@@ -117,7 +104,9 @@ private:
 struct StreamBuilder
 {
     explicit StreamBuilder(RtAudio& audio)
-        : audio_{audio} {}
+        : audio_{audio}
+    {
+    }
 
     StreamBuilder& inputDevice(const DeviceHandler& device, const uint32_t channel)
     {
