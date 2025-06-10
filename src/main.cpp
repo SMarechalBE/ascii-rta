@@ -30,7 +30,8 @@ int main()
         }
         fflush(stdout);
 
-        const auto& data = std::array<float, 10>{0, -10, -20, -30, -40, -50, -60, -70, -80, -90};
+        // const auto data = audio.getOctaveBands()
+        const auto data = std::array<float, 10>{0, -10, -20, -30, -40, -50, -60, -70, -80, -90}; // Mocked data
         gui.draw(data);
     }
 
