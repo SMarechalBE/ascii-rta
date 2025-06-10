@@ -9,7 +9,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(dsp-filters)
 
 # Audio consumer lib
-add_library(audio_consumer audio_consumer.cpp)
+add_library(audio_consumer audio_consumer.cpp analyzer.cpp)
 target_include_directories(audio_consumer
                            PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(audio_consumer PUBLIC DSPFilters PRIVATE fmt)
+target_link_libraries(audio_consumer PUBLIC DSPFilters nonstd::span-lite PRIVATE fmt)

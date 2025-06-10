@@ -1,4 +1,4 @@
-add_subdirectory(audio_analyzer)
+add_subdirectory(audio_consumer)
 add_subdirectory(audio_producer)
 
 # sudo apt install libncurses-dev
