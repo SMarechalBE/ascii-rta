@@ -1,12 +1,12 @@
 #include <cstdio>
-#include "analyzer.h"
 #include "gui.h"
 #include "ncurses.h"
+#include "audio_pipeline.h"
 
 int main()
 {
     Gui gui{};
-    audio_consumer::Analyzer analyzer{};
+    ascii_rta::pipeline::AudioPipeline audio_pipeline{};
 
     auto running{true};
     while (running)
@@ -18,22 +18,21 @@ int main()
                 break;
             case '1':
                 gui.sine_on_ ^= true;
-                // audio.setSine(gui.sine_on_)
+                audio_pipeline.setSineWave(gui.sine_on_);
                 break;
             case '2':
                 gui.pink_on_ ^= true;
-                // audio.setPink(gui.pink_on_)
+                audio_pipeline.setPinkNoise(gui.pink_on_);
                 break;
             case '3':
                 gui.mic_on_ ^= true;
-                // audio.setMic(gui.mic_on_)
+                audio_pipeline.setMic(gui.mic_on_);
                 break;
             default:;
         }
         fflush(stdout);
 
-        const auto data = analyzer.getOctaveBands();
-        gui.draw(data);
+        gui.draw(audio_pipeline.getOctaveBands());
     }
 
     return 0;

@@ -16,4 +16,11 @@ FetchContent_Declare(
   GIT_TAG master)
 FetchContent_MakeAvailable(fmt)
 
+# Span library for C++11 and more
+FetchContent_Declare(
+        span-lite
+        GIT_REPOSITORY https://github.com/martinmoene/span-lite.git
+        GIT_TAG master)
+FetchContent_MakeAvailable(span-lite)
+
 add_subdirectory(src)
