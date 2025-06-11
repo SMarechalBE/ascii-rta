@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-class EchoCallback : public audio_producer::CallbackHandler<float>
+class EchoCallback : public ascii_rta::input::CallbackHandler<float>
 {
     using CallbackHandler::CallbackHandler;
 
@@ -29,7 +29,7 @@ int main()
 {
     try
     {
-        audio_producer::AudioHandler audio{};
+        ascii_rta::input::AudioHandler audio{};
         constexpr auto channel_count{1};
         EchoCallback echo{channel_count};
 

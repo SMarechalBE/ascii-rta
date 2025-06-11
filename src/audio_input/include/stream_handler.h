@@ -1,9 +1,8 @@
-#ifndef AUDIO_PRODUCER_STREAM_HANDLER_H
-#define AUDIO_PRODUCER_STREAM_HANDLER_H
+#ifndef AUDIO_INPUT_STREAM_HANDLER_H
+#define AUDIO_INPUT_STREAM_HANDLER_H
 
-/* AudioProducer */
+/* AudioInput */
 #include "device_handler.h"
-#include "utils.h"
 
 /* FMT */
 #include "fmt/format.h"
@@ -12,7 +11,7 @@
 #include <optional>
 #include <stdexcept>
 
-namespace audio_producer
+namespace ascii_rta::input
 {
 
 class StreamException : public std::runtime_error
@@ -28,6 +27,7 @@ template<typename DataType>
 class CallbackHandler
 {
 public:
+    CallbackHandler() = default;
     explicit CallbackHandler(const uint8_t channel_count)
         : channel_count_{channel_count}
     {
@@ -208,6 +208,6 @@ struct StreamBuilder
     bool auto_start_{false};
 };
 
-} // namespace audio_producer
+} // namespace ascii_rta::input
 
-#endif // AUDIO_PRODUCER_STREAM_HANDLER_H
+#endif // AUDIO_INPUT_STREAM_HANDLER_H

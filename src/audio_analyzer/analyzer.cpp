@@ -2,7 +2,7 @@
 
 #include "DspFilters/Butterworth.h"
 
-namespace audio_consumer
+namespace ascii_rta::analyzer
 {
 
 Analyzer::Analyzer() { _initFilters(); }

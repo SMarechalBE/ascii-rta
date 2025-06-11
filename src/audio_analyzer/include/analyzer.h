@@ -12,7 +12,7 @@
 #include <memory>
 #include <vector>
 
-namespace audio_consumer
+namespace ascii_rta::analyzer
 {
 
 static constexpr auto band_count = 10;
@@ -40,6 +40,6 @@ private:
     std::array<float, band_count> octave_bands_{};
 };
 
-} // namespace audio_consumer
+} // namespace ascii_rta::analyzer
 
 #endif // AUDIO_CONSUMER_ANALYZER_H

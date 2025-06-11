@@ -25,7 +25,7 @@ const T* as_ptr(const std::optional<T>& opt) noexcept
 
 } // namespace
 
-namespace audio_producer
+namespace ascii_rta::input
 {
 
 StreamHandler::StreamHandler(const StreamBuilder& builder)

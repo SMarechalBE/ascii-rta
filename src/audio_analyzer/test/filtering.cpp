@@ -19,7 +19,7 @@ std::array<float, sample_size_> generateWhiteNoise()
 
 int main()
 {
-    audio_consumer::Analyzer analyzer{};
+    ascii_rta::analyzer::Analyzer analyzer{};
 
     analyzer.processSamples(generateWhiteNoise());
 

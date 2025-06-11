@@ -3,13 +3,15 @@
 
 #include "nonstd/span.hpp"
 
-class SawCallback : public audio_producer::CallbackHandler<float>
+class SawCallback : public ascii_rta::input::CallbackHandler<float>
 {
 public:
     explicit SawCallback(const uint8_t channel_count)
         : CallbackHandler{channel_count}, lastValues(channel_count, 0)
     {
     }
+
+    SawCallback(const SawCallback&) = default;
 
 private:
     int process(float* output,
@@ -50,7 +52,7 @@ int main()
 {
     try
     {
-        audio_producer::AudioHandler audio{};
+        ascii_rta::input::AudioHandler audio{};
         constexpr auto channel_count{1};
         SawCallback saw{channel_count};
 

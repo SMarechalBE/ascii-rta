@@ -1,8 +1,5 @@
-#ifndef AUDIO_PRODUCER_DEVICE_HANDLER_H
-#define AUDIO_PRODUCER_DEVICE_HANDLER_H
-
-/* AudioProducer */
-#include "utils.h"
+#ifndef AUDIO_INPUT_DEVICE_HANDLER_H
+#define AUDIO_INPUT_DEVICE_HANDLER_H
 
 /* FMT */
 #include "fmt/base.h"
@@ -11,8 +8,11 @@
 /* RtAudio */
 #include "RtAudio.h"
 
-namespace audio_producer
+namespace ascii_rta::input
 {
+
+using DeviceId = unsigned int;
+using SampleRate = unsigned int;
 
 class DeviceHandler
 {
@@ -52,6 +52,6 @@ private:
     const RtAudio::DeviceInfo device_;
 };
 
-} // namespace audio_producer
+} // namespace ascii_rta::input
 
-#endif // AUDIO_PRODUCER_DEVICE_HANDLER_H
+#endif // AUDIO_INPUT_DEVICE_HANDLER_H

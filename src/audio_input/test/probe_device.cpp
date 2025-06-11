@@ -6,7 +6,7 @@ int main()
 {
     try
     {
-        audio_producer::AudioHandler audio{};
+        ascii_rta::input::AudioHandler audio{};
 
         fmt::print("\n=========== Dumping all devices info ===========\n");
         for (const auto& device: audio.getDevices())

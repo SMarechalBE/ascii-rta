@@ -1,6 +1,6 @@
 #include "audio_handler.h"
 
-/* AudioProducer */
+/* AudioInput */
 #include "device_handler.h"
 #include "stream_handler.h"
 
@@ -14,7 +14,7 @@
 /* STL */
 #include <cstdint>
 
-namespace audio_producer
+namespace ascii_rta::input
 {
 
 AudioHandler::AudioHandler()
@@ -58,4 +58,4 @@ std::vector<DeviceHandler> AudioHandler::getDevices() const
 
 StreamBuilder AudioHandler::buildStream() const { return StreamBuilder{audio_}; }
 
-} // namespace audio_producer
+} // namespace ascii_rta::input

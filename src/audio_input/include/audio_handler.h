@@ -1,9 +1,10 @@
-#ifndef AUDIO_PRODUCER_AUDIO_HANDLER_H
-#define AUDIO_PRODUCER_AUDIO_HANDLER_H
+#ifndef AUDIO_INPUT_AUDIO_HANDLER_H
+#define AUDIO_INPUT_AUDIO_HANDLER_H
 
+/* RtAudio */
 #include "RtAudio.h"
 
-namespace audio_producer
+namespace ascii_rta::input
 {
 
 class DeviceHandler;
@@ -35,6 +36,6 @@ private:
     mutable RtAudio audio_{RtAudio::Api::LINUX_ALSA};
 };
 
-} // namespace rta_assignment
+} // namespace ascii_rta::input
 
-#endif // AUDIO_PRODUCER_AUDIO_HANDLER_H
+#endif // AUDIO_INPUT_AUDIO_HANDLER_H
