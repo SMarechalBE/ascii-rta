@@ -10,6 +10,11 @@ namespace ascii_rta::input
 class DeviceHandler;
 class StreamBuilder;
 
+inline void error_callback(RtAudioErrorType type, const std::string &errorText )
+{
+    // TODO: Should log in file here
+}
+
 /**
  * @brief Wrapper for RtAudio base class, providing multiple helper functions
  */
@@ -33,7 +38,7 @@ public:
     StreamBuilder buildStream() const;
 
 private:
-    mutable RtAudio audio_{RtAudio::Api::LINUX_ALSA};
+    mutable RtAudio audio_{RtAudio::Api::LINUX_ALSA, error_callback};
 };
 
 } // namespace ascii_rta::input

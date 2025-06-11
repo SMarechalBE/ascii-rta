@@ -101,8 +101,8 @@ void StreamHandler::_doStart()
 
 void StreamHandler::_doOpen()
 {
-
-    fmt::print("Opening stream, sample rate:{}, desired buffer frames:{}", sample_rate_, buffer_frames_);
+    // TODO: Should log to a file
+    // fmt::print("Opening stream, sample rate:{}, desired buffer frames:{}", sample_rate_, buffer_frames_);
     const auto desired_buffer_frame = buffer_frames_;
     if (const auto err = audio_.openStream(as_ptr(output_parameters_),
                                            as_ptr(input_parameters_),
