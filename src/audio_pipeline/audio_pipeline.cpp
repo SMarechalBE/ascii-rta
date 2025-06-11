@@ -54,7 +54,7 @@ void AudioPipeline::_run() const
     {
         // Check for errors here, then safely exit
 
-        std::this_thread::sleep_for(std::chrono::seconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }
 
