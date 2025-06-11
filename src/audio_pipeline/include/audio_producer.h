@@ -43,6 +43,12 @@ private:
 
     [[nodiscard]] AudioFrame _computeFrame(nonstd::span<const float> input) const;
 
+    [[nodiscard]] float _getNextPinkNoiseData() const;
+    [[nodiscard]] float _getNextSineWaveData() const;
+
+    const std::vector<float> sine_wave_buffer{input::getSineWaveFileData()};
+    const std::vector<float> pink_noise_buffer{input::getPinkNoiseFileData()};
+
     SharedAtomicBool mic_on_{std::make_shared<std::atomic_bool>(false)};
     SharedAtomicBool sine_wave_on_{std::make_shared<std::atomic_bool>(false)};
     SharedAtomicBool pink_noise_on_{std::make_shared<std::atomic_bool>(false)};

@@ -15,21 +15,24 @@
 namespace ascii_rta::pipeline
 {
 
-float getNextSineWaveData()
+float AudioProducer::_getNextSineWaveData() const
 {
     static uint32_t current_index = 0;
-    static const auto sine_wave_buffer = input::getSineWaveFileData();
     static const auto max_index = sine_wave_buffer.size();
+
+    if (max_index == 0)
+    {
+        throw std::runtime_error("[ERROR] Sine wave buffer is empty!\n");
+    }
 
     current_index = (current_index + 1) % max_index;
 
     return sine_wave_buffer[current_index];
 }
 
-float getNextPinkNoiseData()
+float AudioProducer::_getNextPinkNoiseData() const
 {
     static uint32_t current_index = 0;
-    static const auto pink_noise_buffer = input::getPinkNoiseFileData();
     static const auto max_index = pink_noise_buffer.size();
 
     current_index = (current_index + 1) % max_index;
@@ -79,8 +82,8 @@ AudioFrame AudioProducer::_computeFrame(nonstd::span<const float> input) const
     AudioFrame frame{};
     for (auto i = 0; i < sample_size; ++i)
     {
-        const auto sample = (mic_on ? input[i] : 0) + (sine_wave_on ? getNextSineWaveData() : 0) +
-                       (pink_noise_on ? getNextPinkNoiseData() : 0);
+        const auto sample = (mic_on ? input[i] : 0) + (sine_wave_on ? _getNextSineWaveData() : 0) +
+                       (pink_noise_on ? _getNextPinkNoiseData() : 0);
         // Some kind of dynamic gain could be applied here
         const auto normalized_sample = sample / source_count;
         frame[i] = normalized_sample;

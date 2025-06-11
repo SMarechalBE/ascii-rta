@@ -5,9 +5,11 @@
 #include "utils.h"
 
 /* STL */
+#include <array>
 #include <atomic>
 #include <memory>
 #include <thread>
+#include <mutex>
 
 namespace ascii_rta::pipeline
 {
@@ -24,11 +26,15 @@ public:
 
     ~AudioConsumer();
 
+    [[nodiscard]] std::array<float, 10> getOctaveBands() const;
+
 private:
     void run();
 
     SharedAudioQueue queue_;
     SharedAtomicBool stop_flag_;
+    mutable std::mutex mutex_;
+    std::array<float, 10> octave_bands_{};
     std::thread thread_;
 };
 

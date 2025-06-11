@@ -1,3 +1,5 @@
+add_subdirectory(test)
+
 FetchContent_Declare(
   readerwriterqueue
   GIT_REPOSITORY https://github.com/cameron314/readerwriterqueue

@@ -29,8 +29,7 @@ AudioPipeline::~AudioPipeline()
 
 std::array<float, 10> AudioPipeline::getOctaveBands() const
 {
-    return {-90, -80, -70, -60, -50, -40, -30, -20, -10, 0};
-    // return consumer_->getOctaveBands();
+    return consumer_.getOctaveBands();
 }
 
 void AudioPipeline::setMic(const bool on) { producer_.setMic(on); }
@@ -43,7 +42,7 @@ void AudioPipeline::_run() const
 {
     input::AudioHandler audio_handler{};
     const auto stream = audio_handler.buildStream()
-                                .outputDevice(audio_handler.getDefaultOutputDevice(), audio_channels)
+                                .inputDevice(audio_handler.getDefaultInputDevice(), audio_channels)
                                 .sampleRate(sample_rate)
                                 .bufferFrames(sample_size)
                                 .callback(producer_)
@@ -52,7 +51,7 @@ void AudioPipeline::_run() const
 
     while (!stop_flag_->load())
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 }
 
