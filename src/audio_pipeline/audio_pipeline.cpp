@@ -52,9 +52,7 @@ void AudioPipeline::_run() const
 
     while (!stop_flag_->load())
     {
-        // Check for errors here, then safely exit
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 
